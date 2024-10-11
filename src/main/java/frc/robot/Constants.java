@@ -16,4 +16,11 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class limelightConstants{
+    
+    public static final double limelightHeight = 12;
+
+    public static final double limelightPitch = 12;
+  }
 }

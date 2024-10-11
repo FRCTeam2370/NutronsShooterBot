@@ -5,9 +5,10 @@
 package frc.robot;
 
 import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,8 +19,19 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.ShooterCommands.AimShooter;
+import frc.robot.commands.ShooterCommands.EjectPiece;
+import frc.robot.commands.ShooterCommands.NoteIntake;
+import frc.robot.commands.ShooterCommands.Shoot;
+import frc.robot.commands.ShooterCommands.ShooterIntake;
+import frc.robot.commands.ShooterCommands.SliderAimShooter;
+import frc.robot.commands.ShooterCommands.Stow;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 
 
 public class RobotContainer {
@@ -28,12 +40,20 @@ public class RobotContainer {
   private SlewRateLimiter xLimiter = new SlewRateLimiter(6.25);
   private SlewRateLimiter yLimiter = new SlewRateLimiter(6.25);
 
+  public static PIDController LimelightTurnPID = new PIDController(1.5,0, 0);
+
   /* Setting up bindings for necessary control of the swerve drive platform */
   private static final CommandXboxController joystick = new CommandXboxController(0); // My joystick
   public static final GenericHID driver = new GenericHID(0);
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
+  private static final Shooter mShooter = new Shooter();
+  private static final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  private static final LEDSubsystem mLEDSubsystem = new LEDSubsystem();
+  private static final Limelight mLimelight = new Limelight();
+
   public static POVButton upDpad = new POVButton(driver, 0);
+  public static JoystickButton leftbumper = new JoystickButton(joystick.getHID(), 5);
 
 
   
@@ -67,9 +87,27 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
+    
+    leftbumper.toggleOnTrue(new NoteIntake());//RunIndexer()
+    joystick.rightBumper().whileTrue(new EjectPiece());
 
+    joystick.rightTrigger().whileTrue(new Shoot(85, mShooter, mIntakeSubsystem));//80 is really good =)
+    joystick.leftTrigger().toggleOnTrue(new ShooterIntake());
 
-    joystick.leftBumper().whileTrue()
+    //joystick.b().whileTrue(new RunIntakeManual(0.5));
+
+    joystick.x().onTrue(new AimShooter(mShooter, 2.5));
+
+    joystick.b().onTrue(new Stow());
+
+    joystick.y().whileTrue(new AimShooter(mShooter, 4.2));
+
+    joystick.leftStick().toggleOnTrue(new SliderAimShooter());
+
+    //joystick.rightStick().toggleOnTrue(new AutoAlign());
+
+    joystick.rightStick().toggleOnTrue(drivetrain.applyRequest(()-> drive.withVelocityX((-joystick.getLeftY() * MaxSpeed)* 0.75).withVelocityY((-joystick.getLeftX() * MaxSpeed)* 0.75).withRotationalRate(LimelightTurnPID.calculate(Limelight.txSlowly()))));
+    
   }
 
   public RobotContainer() {

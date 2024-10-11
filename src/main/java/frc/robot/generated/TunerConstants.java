@@ -112,7 +112,7 @@ public class TunerConstants {
     private static final int kFrontLeftDriveMotorId = 2;
     private static final int kFrontLeftSteerMotorId = 9;
     private static final int kFrontLeftEncoderId = 34;
-    private static final double kFrontLeftEncoderOffset = 0.142578125;
+    private static final double kFrontLeftEncoderOffset = 0.140380859375;//0.142578125
     private static final boolean kFrontLeftSteerInvert = true;
 
     private static final double kFrontLeftXPosInches = 9.375;
@@ -122,7 +122,7 @@ public class TunerConstants {
     private static final int kFrontRightDriveMotorId = 4;
     private static final int kFrontRightSteerMotorId = 3;
     private static final int kFrontRightEncoderId = 30;
-    private static final double kFrontRightEncoderOffset = 0.21484375;
+    private static final double kFrontRightEncoderOffset =  0.22314453125;//0.21484375
     private static final boolean kFrontRightSteerInvert = true;
 
     private static final double kFrontRightXPosInches = 9.375;
@@ -132,7 +132,7 @@ public class TunerConstants {
     private static final int kBackLeftDriveMotorId = 8;
     private static final int kBackLeftSteerMotorId = 7;
     private static final int kBackLeftEncoderId = 32;
-    private static final double kBackLeftEncoderOffset = 0.448486328125;
+    private static final double kBackLeftEncoderOffset = 0.4423828125;//0.448486328125
     private static final boolean kBackLeftSteerInvert = true;
 
     private static final double kBackLeftXPosInches = -9.375;
@@ -142,7 +142,7 @@ public class TunerConstants {
     private static final int kBackRightDriveMotorId = 6;
     private static final int kBackRightSteerMotorId = 5;
     private static final int kBackRightEncoderId = 31;
-    private static final double kBackRightEncoderOffset = 0.014892578125;
+    private static final double kBackRightEncoderOffset =  0.011962890625;//0.014892578125
     private static final boolean kBackRightSteerInvert = true;
 
     private static final double kBackRightXPosInches = -9.375;
