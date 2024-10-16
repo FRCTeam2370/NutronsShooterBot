@@ -27,7 +27,9 @@ public class Limelight extends SubsystemBase {
     double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
 
     double distanceFromTarget = (57.13 - limelightMountHeight) / Math.tan(angleToGoalRadians);
+    double distanceFromTargetInches = distanceFromTarget * 0.503;
     SmartDashboard.putNumber("Li DistanceFromTarget", distanceFromTarget);
+    //Shooter.AimShooterWithDistance(distanceFromTarget);
     DistanceFromTarget = distanceFromTarget;
     
 }

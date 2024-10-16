@@ -39,9 +39,11 @@ public class Shooter extends SubsystemBase {
 
   public static final DigitalInput ShooterIndexerBeam = new DigitalInput(0);
 
-  public static Boolean hasPiece;
+  public static Boolean hasPiece = true;
 
   public static double posSliderVal;
+
+  public static double aimSetPoint;
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -57,7 +59,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Aim kI slider", 0);
     SmartDashboard.putNumber("Shooter Aim kD slider", 0);
 
-    SmartDashboard.putNumber("pos Slider", posSliderVal);
+    SmartDashboard.putNumber("--pos Slider--", posSliderVal);
   }
 
   public static void runShooter(double speed){
@@ -73,6 +75,30 @@ public class Shooter extends SubsystemBase {
 
   public static void AimShooter(double position){
     shooterAim.setControl(aimDutyCycle.withPosition(position));
+  }
+
+  public static void AimShooterWithDistance(double dis){
+
+    //double angle = (100 - Math.sqrt(10000 - 40.4 * (309 - dis))) / 20.2;//-0.0231 * dis + 5.57;(95.8 - Math.sqrt(9156.64 - 37.84 * (302 - dis))) / 18.92;
+    //double angle = (95.8 - Math.sqrt(9156.64 - 37.84 * (302 - dis))) / 18.92;
+
+
+    double angle = Math.pow(Math.E, (206 - dis) / 97.7);
+
+    //double angle = ((1.15 * Math.pow(Math.E, (-dis + 212) / 103)) + 0.85 * 290 / (1.05*dis)) / 2;
+
+    if(angle > 4.5){
+      angle = 4.5;
+    }else if(angle < 1){
+      angle = 1;
+    }
+
+    shooterAim.setControl(aimDutyCycle.withPosition(angle));
+
+    SmartDashboard.putNumber("Shooter angle", angle);
+
+    aimSetPoint = angle;
+    
   }
 
   public static void runIndex(double speed){
@@ -91,7 +117,7 @@ public class Shooter extends SubsystemBase {
   }
 
   private static void configAimMotor(){
-    AimMotorConfig.Slot0.kP = 0.15;//0.025  0.125
+    AimMotorConfig.Slot0.kP = 0.155;//0.025  0.125 // important 0.15
     AimMotorConfig.Slot0.kI = 0;
     AimMotorConfig.Slot0.kD = 0; 
     AimMotorConfig.Slot0.kG = 0.03;//0.45
@@ -164,6 +190,8 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Aim Motor Volts", shooterAim.getMotorVoltage().getValueAsDouble());
 
     posSliderVal = SmartDashboard.getNumber("pos Slider", 0.5);
+
+    SmartDashboard.putNumber("Shooter aim set point", aimSetPoint);
     
 
   }

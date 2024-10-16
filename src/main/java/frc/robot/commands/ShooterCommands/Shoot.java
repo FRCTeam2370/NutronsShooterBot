@@ -33,7 +33,7 @@ public class Shoot extends Command {
   @Override
   public void execute() {
     Shooter.runShooter(speed);
-    if(Shooter.getShooterVelocity() > (speed * 0.9) && Shooter.hasPiece && Shooter.shooterAim.getPosition().getValueAsDouble() > 0.75){
+    if(Shooter.getShooterVelocity() > (speed * 0.9) && Shooter.hasPiece && Shooter.shooterAim.getPosition().getValueAsDouble() > 0.25){
       Shooter.runIndex(IndexSpeed);
       IntakeSubsystem.runIntake(IndexSpeed);
     }else{
@@ -45,9 +45,9 @@ public class Shoot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Shooter.runShooter(0);
     Shooter.runIndex(0);
     IntakeSubsystem.runIntake(0);
+    Shooter.runShooter(0);
   }
 
   // Returns true when the command should end.

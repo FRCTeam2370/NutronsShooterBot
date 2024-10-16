@@ -19,8 +19,8 @@ public final class Constants {
 
   public static class limelightConstants{
     
-    public static final double limelightHeight = 12;
+    public static final double limelightHeight = 18;
 
-    public static final double limelightPitch = 12;
+    public static final double limelightPitch = 25;
   }
 }
