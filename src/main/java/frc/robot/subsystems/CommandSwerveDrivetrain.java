@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -24,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.Drive.AimWithLimelight;
 import frc.robot.generated.TunerConstants;
 
 /**
@@ -31,9 +34,13 @@ import frc.robot.generated.TunerConstants;
  * subsystem so it can be used in command-based projects easily.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
+    public static final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
+
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+
+    private static Rotation2d autoDesiredAngle;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
@@ -86,11 +93,27 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                                                 }
                                                 return false;}, // Change this if the path needs to be flipped on red vs blue
             this); // Subsystem for requirements
-        
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
-    public static void AimWithLimelight(double limelightOffset, CommandSwerveDrivetrain drivetrain){
-        drivetrain.applyRequest(()-> RobotContainer.drive.withVelocityX((-RobotContainer.joystick.getLeftY() * RobotContainer.MaxSpeed)* 0.75).withVelocityY((-RobotContainer.joystick.getLeftX() * RobotContainer.MaxSpeed)* 0.75).withRotationalRate(RobotContainer.LimelightTurnPID.calculate(limelightOffset)));
+    public Optional<Rotation2d> getRotationTargetOverride(){
+        return Optional.of(autoDesiredAngle);
+    }
+
+    public static void setAutonomousShotHeading(Rotation2d desiredHeading) {
+        autoDesiredAngle = desiredHeading;
+    }
+
+
+    public final static SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(RobotContainer.MaxSpeed * 0.1).withRotationalDeadband(RobotContainer.MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+
+    public static void AimWithLimelight(Supplier<Double> limelightOffset, CommandSwerveDrivetrain drivetrain){
+        drivetrain.applyRequest(()-> drive.withRotationalRate(RobotContainer.LimelightTurnPID.calculate(limelightOffset.get())));
+        //RobotContainer.drivetrain.applyRequest(()-> new SwerveRequest.FieldCentric().withRotationalRate(limelightOffset));
+        System.out.println("Rotating");
     }
 
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {

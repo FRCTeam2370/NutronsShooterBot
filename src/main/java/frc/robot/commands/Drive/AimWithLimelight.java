@@ -4,18 +4,22 @@
 
 package frc.robot.commands.Drive;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.RobotContainer;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
 
 public class AimWithLimelight extends Command {
   CommandSwerveDrivetrain drivetrain;
-  Limelight mLimelight = new Limelight();
+  Limelight mLimelight;
   /** Creates a new AimWithLimelight. */
-  public AimWithLimelight(CommandSwerveDrivetrain drivetrain) {
+  public AimWithLimelight(CommandSwerveDrivetrain drivetrain, Limelight mLimelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drivetrain = drivetrain;
+    this.mLimelight = mLimelight;
     addRequirements(drivetrain, mLimelight);
   }
 
@@ -26,7 +30,11 @@ public class AimWithLimelight extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CommandSwerveDrivetrain.AimWithLimelight(Limelight.txSlowly(), drivetrain);
+    System.out.println("In Command");
+    System.out.println(Limelight.getRotationLime().getDegrees());
+    //CommandSwerveDrivetrain.AimWithLimelight(()-> Limelight.getRotationLimelight(), drivetrain);
+    CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
+    CommandSwerveDrivetrain.drive.withRotationalRate(Limelight.getRotationLime().getDegrees());
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +44,9 @@ public class AimWithLimelight extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    
+      return false;
+    
+    
   }
 }

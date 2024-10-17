@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -31,6 +32,7 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("Li DistanceFromTarget", distanceFromTarget);
     //Shooter.AimShooterWithDistance(distanceFromTarget);
     DistanceFromTarget = distanceFromTarget;
+    getRotationLime();
     
 }
 
@@ -39,7 +41,16 @@ public static double txSlowly(){
   return TX;
 }
 
+public static Rotation2d getRotationLime(){
+  double rotationalOffset = getTx() * -0.1;
+  Rotation2d angle = (Rotation2d.fromDegrees(rotationalOffset));
+  return angle;
+}
 
+public static double getRotationLimelight(){
+  double angle = txSlowly();
+  return angle;
+}
 
   public static double getTx(){
     tx = LimelightHelpers.getTX("");

@@ -63,9 +63,9 @@ public class LEDSubsystem extends SubsystemBase {
       headlightsBuf.setRGB(i, 0, green, 0);
     }
 
-    green += speed *applyer;
+    green += applyer;
 
-    if(green == 255){
+    if(green == 100){
       applyer = -1;
     }else if(green == 0){
       applyer = 1;
