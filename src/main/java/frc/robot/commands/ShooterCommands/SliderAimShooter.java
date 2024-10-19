@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class SliderAimShooter extends Command {
-  Shooter mShooter = new Shooter();
+  Shooter mShooter;
   /** Creates a new SliderAimShooter. */
-  public SliderAimShooter() {
+  public SliderAimShooter(Shooter mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.mShooter = mShooter;
     addRequirements(mShooter);
   }
 

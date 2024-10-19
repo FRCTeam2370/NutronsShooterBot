@@ -9,10 +9,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
 
 public class EjectPiece extends Command {
-  Shooter mShooter = new Shooter();
-  IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  Shooter mShooter;
+  IntakeSubsystem mIntakeSubsystem;
   /** Creates a new EjectPiece. */
-  public EjectPiece() {
+  public EjectPiece(Shooter mShooter, IntakeSubsystem mIntakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mShooter, mIntakeSubsystem);
   }

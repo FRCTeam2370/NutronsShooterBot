@@ -103,8 +103,8 @@ public class RobotContainer {
     drivetrain.registerTelemetry(logger::telemeterize);
 
     
-    leftbumper.toggleOnTrue(new NoteIntake());//RunIndexer()
-    joystick.rightBumper().whileTrue(new EjectPiece());
+    leftbumper.toggleOnTrue(new NoteIntake(mShooter, mIntakeSubsystem));//RunIndexer()
+    joystick.rightBumper().whileTrue(new EjectPiece(mShooter, mIntakeSubsystem));
 
     joystick.rightTrigger().whileTrue(new Shoot(85, mShooter, mIntakeSubsystem));//80 is really good =)
     joystick.leftTrigger().toggleOnTrue(new ShooterIntake(mShooter));
@@ -113,11 +113,11 @@ public class RobotContainer {
 
     joystick.x().toggleOnTrue(new AutoAim(mLimelight, mShooter));
 
-    joystick.b().onTrue(new Stow());
+    joystick.b().onTrue(new Stow(mShooter));
 
     joystick.y().whileTrue(new AimShooter(mShooter, 2.38));
 
-    joystick.leftStick().toggleOnTrue(new SliderAimShooter());
+    joystick.leftStick().toggleOnTrue(new SliderAimShooter(mShooter));
 
     //joystick.rightStick().toggleOnTrue(new AutoAlign());
 
@@ -130,7 +130,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     NamedCommands.registerCommand("Shoot", new Shoot(85, mShooter, mIntakeSubsystem));
-    NamedCommands.registerCommand("Intake", new NoteIntake());
+    NamedCommands.registerCommand("Intake", new NoteIntake(mShooter, mIntakeSubsystem));
     NamedCommands.registerCommand("AutoAim", new AutoAutoAim(mLimelight, mShooter));
     NamedCommands.registerCommand("AutoAlign", new AimWithLimelight(drivetrain, mLimelight));
 

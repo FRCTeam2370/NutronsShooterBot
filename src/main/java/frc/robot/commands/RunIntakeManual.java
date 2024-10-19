@@ -8,12 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class RunIntakeManual extends Command {
-  IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  IntakeSubsystem mIntakeSubsystem;
   double speed;
   /** Creates a new RunIntake. */
-  public RunIntakeManual(double speed) {
+  public RunIntakeManual(double speed, IntakeSubsystem mIntakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
+    this.mIntakeSubsystem = mIntakeSubsystem;
     addRequirements(mIntakeSubsystem);
   }
 

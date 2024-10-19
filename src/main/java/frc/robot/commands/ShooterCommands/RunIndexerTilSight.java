@@ -11,11 +11,13 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.Shooter;
 
 public class RunIndexerTilSight extends Command {
-  Shooter mShooter = new Shooter();
-  IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  Shooter mShooter;
+  IntakeSubsystem mIntakeSubsystem;
   /** Creates a new RunIndexerTilSight. */
-  public RunIndexerTilSight() {
+  public RunIndexerTilSight(Shooter mShooter, IntakeSubsystem mIntakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.mShooter = mShooter;
+    this.mIntakeSubsystem = mIntakeSubsystem;
     addRequirements(mShooter, mIntakeSubsystem);
   }
 

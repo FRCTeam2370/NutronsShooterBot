@@ -9,9 +9,10 @@ import frc.robot.subsystems.Shooter;
 
 public class Stow extends Command {
   /** Creates a new Stow. */
-  Shooter mShooter = new Shooter();
-  public Stow() {
+  Shooter mShooter;
+  public Stow(Shooter mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.mShooter = mShooter;
     addRequirements(mShooter);
   }
 

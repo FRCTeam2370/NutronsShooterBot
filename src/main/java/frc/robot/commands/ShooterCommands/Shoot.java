@@ -9,8 +9,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
 
 public class Shoot extends Command {
-  Shooter mShooter = new Shooter();
-  IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  Shooter mShooter;
+  IntakeSubsystem mIntakeSubsystem;
   double speed;
   double IndexSpeed;
   /** Creates a new Shoot. */

@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class RunIndexer extends Command {
-  private Shooter mShooter = new Shooter();
+  private Shooter mShooter;
   /** Creates a new RunIndexer. */
-  public RunIndexer() {
+  public RunIndexer(Shooter mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.mShooter = mShooter;
     addRequirements(mShooter);
   }
 

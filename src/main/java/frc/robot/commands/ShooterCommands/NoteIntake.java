@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.LEDCommands.LEDColor;
 import frc.robot.commands.LEDCommands.StopLEDs;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class NoteIntake extends SequentialCommandGroup {
   /** Creates a new NoteIntake. */
-  public NoteIntake() {
+  public NoteIntake(Shooter mShooter, IntakeSubsystem mIntakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RunIndexerTilSight(), new LEDColor().alongWith(new WaitCommand(2)), new StopLEDs());
+    addCommands(new RunIndexerTilSight(mShooter, mIntakeSubsystem), new LEDColor().alongWith(new WaitCommand(2)), new StopLEDs());
 
   }
 }
