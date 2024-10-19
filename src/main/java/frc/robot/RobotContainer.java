@@ -62,7 +62,7 @@ public class RobotContainer {
   private static final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private static final LEDSubsystem mLEDSubsystem = new LEDSubsystem();
   private static final Limelight mLimelight = new Limelight();
-  
+  public static final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
   
 
   public static POVButton upDpad = new POVButton(driver, 0);
@@ -79,12 +79,12 @@ public class RobotContainer {
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
   public static void rotate(Supplier<Double> rotationVal){
-    CommandSwerveDrivetrain.drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withRotationalRate(rotationVal.get()));
+    drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withRotationalRate(rotationVal.get()));
   }
 
   private void configureBindings() {
-    CommandSwerveDrivetrain.drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        CommandSwerveDrivetrain.drivetrain.applyRequest(() -> CommandSwerveDrivetrain.drive.withVelocityX(yLimiter.calculate(-joystick.getLeftY() * MaxSpeed)) // Drive forward with
+    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(() -> CommandSwerveDrivetrain.drive.withVelocityX(yLimiter.calculate(-joystick.getLeftY() * MaxSpeed)) // Drive forward with
                                                                                            // negative Y (forward)
             .withVelocityY(xLimiter.calculate(-joystick.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
             .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
@@ -95,12 +95,12 @@ public class RobotContainer {
     //     .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    joystick.a().onTrue(CommandSwerveDrivetrain.drivetrain.runOnce(() -> CommandSwerveDrivetrain.drivetrain.seedFieldRelative()));
+    joystick.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
     if (Utils.isSimulation()) {
-      CommandSwerveDrivetrain.drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
-    CommandSwerveDrivetrain.drivetrain.registerTelemetry(logger::telemeterize);
+    drivetrain.registerTelemetry(logger::telemeterize);
 
     
     leftbumper.toggleOnTrue(new NoteIntake());//RunIndexer()
@@ -122,7 +122,7 @@ public class RobotContainer {
     //joystick.rightStick().toggleOnTrue(new AutoAlign());
 
     //joystick.rightStick().toggleOnTrue(drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withVelocityX((-joystick.getLeftY() * MaxSpeed)* 0.75).withVelocityY((-joystick.getLeftX() * MaxSpeed)* 0.75).withRotationalRate(Limelight.getRotationLime().getDegrees())));
-    joystick.rightStick().toggleOnTrue(new AimWithLimelight(CommandSwerveDrivetrain.drivetrain, mLimelight));
+    joystick.rightStick().toggleOnTrue(new AimWithLimelight(drivetrain, mLimelight));
 
   }
 
@@ -132,7 +132,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Shoot", new Shoot(85, mShooter, mIntakeSubsystem));
     NamedCommands.registerCommand("Intake", new NoteIntake());
     NamedCommands.registerCommand("AutoAim", new AutoAutoAim(mLimelight));
-    NamedCommands.registerCommand("AutoAlign", new AimWithLimelight(CommandSwerveDrivetrain.drivetrain, mLimelight));
+    NamedCommands.registerCommand("AutoAlign", new AimWithLimelight(drivetrain, mLimelight));
 
     configureBindings();
 
