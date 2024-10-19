@@ -9,12 +9,13 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class AutoAutoAim extends Command {
-   Shooter mShooter = new Shooter();
-  Limelight mLimelight = new Limelight();
+   Shooter mShooter;
+  Limelight mLimelight;
   /** Creates a new AutoAim. */
-  public AutoAutoAim(Limelight mLimelight) {
+  public AutoAutoAim(Limelight mLimelight, Shooter mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mLimelight = mLimelight;
+    this.mShooter = mShooter;
     addRequirements(mShooter, mLimelight);
   }
 

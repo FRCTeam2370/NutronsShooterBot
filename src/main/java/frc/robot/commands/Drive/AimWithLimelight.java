@@ -14,9 +14,9 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
 
 public class AimWithLimelight extends Command {
-  CommandSwerveDrivetrain drivetrain;
-  Limelight mLimelight;
-  PIDController LimelightTurnPID = new PIDController(1.5,0, 0);
+  private CommandSwerveDrivetrain drivetrain;
+  private Limelight mLimelight;
+  PIDController LimelightTurnPID = new PIDController(1,0, 0);
   /** Creates a new AimWithLimelight. */
   public AimWithLimelight(CommandSwerveDrivetrain drivetrain, Limelight mLimelight) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,7 +28,7 @@ public class AimWithLimelight extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +37,8 @@ public class AimWithLimelight extends Command {
     System.out.println("In Command");
     System.out.println(Limelight.getRotationLime().getDegrees());
     //CommandSwerveDrivetrain.AimWithLimelight(()-> Limelight.getRotationLimelight(), drivetrain);
-    CommandSwerveDrivetrain.drive.withRotationalRate(LimelightTurnPID.calculate(-Limelight.getRotationLime().getDegrees()));
+    CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
+    CommandSwerveDrivetrain.drive.withVelocityX(0).withVelocityY(0).withRotationalRate(LimelightTurnPID.calculate(-Limelight.getRotationLime().getDegrees()));
   }
 
   // Called once the command ends or is interrupted.
@@ -47,9 +48,10 @@ public class AimWithLimelight extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
+    if(Limelight.tx < 3 && Limelight.tx > -3){
+      return true;
+    }else{
       return false;
-    
-    
+    }
   }
 }

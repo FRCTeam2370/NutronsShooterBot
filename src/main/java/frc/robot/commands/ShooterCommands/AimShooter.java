@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class AimShooter extends Command {
-  Shooter mShooter = new Shooter();
+  Shooter mShooter;
   double position;
   /** Creates a new AimShooter. */
   public AimShooter(Shooter mShooter, double position) {

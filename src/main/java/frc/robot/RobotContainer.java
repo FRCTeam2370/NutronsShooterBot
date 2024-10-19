@@ -107,11 +107,11 @@ public class RobotContainer {
     joystick.rightBumper().whileTrue(new EjectPiece());
 
     joystick.rightTrigger().whileTrue(new Shoot(85, mShooter, mIntakeSubsystem));//80 is really good =)
-    joystick.leftTrigger().toggleOnTrue(new ShooterIntake());
+    joystick.leftTrigger().toggleOnTrue(new ShooterIntake(mShooter));
 
     //joystick.b().whileTrue(new RunIntakeManual(0.5));
 
-    joystick.x().toggleOnTrue(new AutoAim());
+    joystick.x().toggleOnTrue(new AutoAim(mLimelight, mShooter));
 
     joystick.b().onTrue(new Stow());
 
@@ -131,7 +131,7 @@ public class RobotContainer {
   public RobotContainer() {
     NamedCommands.registerCommand("Shoot", new Shoot(85, mShooter, mIntakeSubsystem));
     NamedCommands.registerCommand("Intake", new NoteIntake());
-    NamedCommands.registerCommand("AutoAim", new AutoAutoAim(mLimelight));
+    NamedCommands.registerCommand("AutoAim", new AutoAutoAim(mLimelight, mShooter));
     NamedCommands.registerCommand("AutoAlign", new AimWithLimelight(drivetrain, mLimelight));
 
     configureBindings();

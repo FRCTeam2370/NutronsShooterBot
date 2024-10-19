@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class ShooterIntake extends Command {
-  Shooter mShooter = new Shooter();
+  Shooter mShooter;
   Boolean done = false;
   /** Creates a new BabyBird. */
-  public ShooterIntake() {
+  public ShooterIntake(Shooter mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mShooter);
   }
