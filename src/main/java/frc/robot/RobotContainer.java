@@ -111,7 +111,7 @@ public class RobotContainer {
 
     //joystick.b().whileTrue(new RunIntakeManual(0.5));
 
-    joystick.x().toggleOnTrue(new AutoAim(mLimelight, mShooter));
+    joystick.x().toggleOnTrue(new AutoAutoAim(mLimelight, mShooter));//FIX AutoAim(); !!!!!!!!!
 
     joystick.b().onTrue(new Stow(mShooter));
 
