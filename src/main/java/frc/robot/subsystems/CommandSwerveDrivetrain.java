@@ -34,7 +34,8 @@ import frc.robot.generated.TunerConstants;
  * subsystem so it can be used in command-based projects easily.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-    
+    public static double MaxSpeed = 3;//TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
+    public static double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
@@ -93,7 +94,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                                                 }
                                                 return false;}, // Change this if the path needs to be flipped on red vs blue
             this); // Subsystem for requirements
-        //PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
     public Optional<Rotation2d> getRotationTargetOverride(){
@@ -106,8 +107,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
 
     public final static SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      .withDeadband(RobotContainer.MaxSpeed * 0.1).withRotationalDeadband(RobotContainer.MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    public static void rotateToTarget(CommandSwerveDrivetrain drivetrain, double angle){
+        drivetrain.applyRequest(()-> drive.withRotationalRate(angle));
+    }
 
 
     public static void AimWithLimelight(Supplier<Double> limelightOffset, CommandSwerveDrivetrain drivetrain){

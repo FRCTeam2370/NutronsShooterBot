@@ -28,17 +28,17 @@ public class AimWithLimelight extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    //drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     System.out.println("In Command");
-    System.out.println(Limelight.getRotationLime().getDegrees());
+    System.out.println(-Limelight.getRotationLime().getDegrees());
     //CommandSwerveDrivetrain.AimWithLimelight(()-> Limelight.getRotationLimelight(), drivetrain);
     CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
-    CommandSwerveDrivetrain.drive.withVelocityX(0).withVelocityY(0).withRotationalRate(LimelightTurnPID.calculate(-Limelight.getRotationLime().getDegrees()));
+    CommandSwerveDrivetrain.drive.withRotationalRate(-Limelight.getRotationLime().getDegrees());
   }
 
   // Called once the command ends or is interrupted.

@@ -9,7 +9,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class AutoAutoAim extends Command {
-   Shooter mShooter;
+  Shooter mShooter;
   Limelight mLimelight;
   /** Creates a new AutoAim. */
   public AutoAutoAim(Limelight mLimelight, Shooter mShooter) {
