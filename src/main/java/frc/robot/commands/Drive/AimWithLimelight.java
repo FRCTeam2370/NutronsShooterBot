@@ -28,7 +28,7 @@ public class AimWithLimelight extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
+    drivetrain.setControl(CommandSwerveDrivetrain.drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,8 +37,8 @@ public class AimWithLimelight extends Command {
     System.out.println("In Command");
     System.out.println(-Limelight.getRotationLime().getDegrees());
     //CommandSwerveDrivetrain.AimWithLimelight(()-> Limelight.getRotationLimelight(), drivetrain);
-    CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
-    CommandSwerveDrivetrain.drive.withRotationalRate(-Limelight.getRotationLime().getDegrees());
+    //CommandSwerveDrivetrain.setAutonomousShotHeading(Limelight.getRotationLime());
+    drivetrain.setControl(CommandSwerveDrivetrain.drive.withRotationalRate(LimelightTurnPID.calculate(-Limelight.getRotationLime().getDegrees())));
   }
 
   // Called once the command ends or is interrupted.
@@ -48,7 +48,7 @@ public class AimWithLimelight extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Limelight.tx < 3 && Limelight.tx > -3){
+    if(Limelight.tx < 3 && Limelight.tx > -3 && Limelight.tx != 0){
       return true;
     }else{
       return false;

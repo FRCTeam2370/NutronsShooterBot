@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.Drive.AimAndShootAutoLime;
 import frc.robot.commands.Drive.AimWithLimelight;
 import frc.robot.commands.ShooterCommands.AimShooter;
 import frc.robot.commands.ShooterCommands.AutoAim;
@@ -38,6 +39,7 @@ import frc.robot.commands.ShooterCommands.NoteIntake;
 import frc.robot.commands.ShooterCommands.Shoot;
 import frc.robot.commands.ShooterCommands.ShooterIntake;
 import frc.robot.commands.ShooterCommands.SliderAimShooter;
+import frc.robot.commands.ShooterCommands.StopShooter;
 import frc.robot.commands.ShooterCommands.Stow;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -109,11 +111,14 @@ public class RobotContainer {
     joystick.rightBumper().whileTrue(new EjectPiece(mShooter, mIntakeSubsystem));
 
     joystick.rightTrigger().whileTrue(new Shoot(85, mShooter, mIntakeSubsystem));//80 is really good =)
+    joystick.rightTrigger().onFalse(new StopShooter(mShooter, mIntakeSubsystem));
+
     joystick.leftTrigger().toggleOnTrue(new ShooterIntake(mShooter));
 
     //joystick.b().whileTrue(new RunIntakeManual(0.5));
 
-    joystick.x().toggleOnTrue(new AutoAutoAim(mLimelight, mShooter));//FIX AutoAim(); !!!!!!!!!
+    //joystick.x().toggleOnTrue(new AutoAutoAim(mLimelight, mShooter));//FIX AutoAim(); !!!!!!!!!
+    joystick.x().toggleOnTrue(new AimAndShootAutoLime(drivetrain, mLimelight, mShooter, mIntakeSubsystem));
 
     joystick.b().onTrue(new Stow(mShooter));
 
@@ -123,8 +128,8 @@ public class RobotContainer {
 
     //joystick.rightStick().toggleOnTrue(new AutoAlign());
 
-    //joystick.rightStick().toggleOnTrue(drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withVelocityX((-joystick.getLeftY() * MaxSpeed)* 0.75).withVelocityY((-joystick.getLeftX() * MaxSpeed)* 0.75).withRotationalRate(Limelight.getRotationLime().getDegrees())));
-    joystick.rightStick().toggleOnTrue(new AimWithLimelight(drivetrain, mLimelight));
+    joystick.rightStick().toggleOnTrue(drivetrain.applyRequest(()-> CommandSwerveDrivetrain.drive.withVelocityX((-joystick.getLeftY() * MaxSpeed)* 0.75).withVelocityY((-joystick.getLeftX() * MaxSpeed)* 0.75).withRotationalRate(Limelight.getRotationLime().getDegrees())));
+    //joystick.rightStick().toggleOnTrue(new AimWithLimelight(drivetrain, mLimelight));
 
   }
 
@@ -135,6 +140,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", new NoteIntake(mShooter, mIntakeSubsystem));
     NamedCommands.registerCommand("AutoAim", new AutoAutoAim(mLimelight, mShooter));
     NamedCommands.registerCommand("AutoAlign", new AimWithLimelight(drivetrain, mLimelight));
+    NamedCommands.registerCommand("AutoShoot", new AimAndShootAutoLime(drivetrain, mLimelight, mShooter, mIntakeSubsystem));
 
     configureBindings();
 
