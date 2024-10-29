@@ -50,7 +50,7 @@ import frc.robot.subsystems.Shooter;
 
 
 public class RobotContainer {
-  public static double MaxSpeed = 3;//TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
+  public static double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
   public static double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
   private SlewRateLimiter xLimiter = new SlewRateLimiter(6.25);
   private SlewRateLimiter yLimiter = new SlewRateLimiter(6.25);
