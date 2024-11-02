@@ -1,0 +1,120 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.6981417438618351,
+        "y": 3.7421294215807808
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.698141743861835,
+        "y": 3.7421294215807808
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.182508716561378,
+        "y": 2.466688828864594
+      },
+      "prevControl": {
+        "x": 5.18623609351805,
+        "y": 0.6689252550385889
+      },
+      "nextControl": {
+        "x": 8.523750254151341,
+        "y": 2.671433751418573
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.5922951731943344,
+        "y": 1.6956523941537918
+      },
+      "prevControl": {
+        "x": 6.738322308553448,
+        "y": 1.6020991586142719
+      },
+      "nextControl": {
+        "x": 4.360513536209606,
+        "y": 1.7962059971729538
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5401208637175103,
+        "y": 3.1691158539012236
+      },
+      "prevControl": {
+        "x": 3.5809006090946647,
+        "y": 3.2041983172285424
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -142.1250163489018,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Speed Up back",
+      "minWaypointRelativePos": 1.6,
+      "maxWaypointRelativePos": 2.65,
+      "constraints": {
+        "maxVelocity": 3.5,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 130.23635830927375,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "UnderStage Paths",
+  "previewStartingState": {
+    "rotation": 134.32596310201544,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
