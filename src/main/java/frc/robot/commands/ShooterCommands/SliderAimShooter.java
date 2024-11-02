@@ -29,7 +29,7 @@ public class SliderAimShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Shooter.shooterAim.set(0);;
+    Shooter.shooterAim.set(0);
   }
 
   // Returns true when the command should end.

@@ -122,7 +122,7 @@ public class RobotContainer {
 
     joystick.b().onTrue(new Stow(mShooter));
 
-    joystick.y().whileTrue(new AimShooter(mShooter, 2.38));
+    joystick.y().whileTrue(new AimShooter(mShooter, 0.75));
 
     joystick.leftStick().toggleOnTrue(new SliderAimShooter(mShooter));
 

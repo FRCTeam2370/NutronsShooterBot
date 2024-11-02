@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7158327706968803,
+      "y": 6.642279723305886
+    },
+    "rotation": -117.2161115573075
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp-}C1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C1-}M1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Autos",
+  "choreoAuto": false
+}

@@ -189,7 +189,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Aim Error", shooterAim.getClosedLoopError().getValueAsDouble());
     SmartDashboard.putNumber("Aim Motor Volts", shooterAim.getMotorVoltage().getValueAsDouble());
 
-    posSliderVal = SmartDashboard.getNumber("pos Slider", 0.5);
+    posSliderVal = SmartDashboard.getNumber("--pos Slider--", 0.5);
 
     SmartDashboard.putNumber("Shooter aim set point", aimSetPoint);
     
